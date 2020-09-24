@@ -27,7 +27,7 @@ gem 'jruby-openssl', :platform => :jruby
 end
 
 group :default do
-  gem 'jar-dependencies', '>= 0.1.9', :require => nil, :platform => :jruby
+  gem 'jar-dependencies', '>= 0.3', :require => nil, :platform => :jruby
   gem 'ruby-maven', '~> 3.1.1.0.11', :require => nil, :platform => :jruby, :group => :development
 end if ENV['BUILD_EXT_MAVEN'] == 'true'
 
