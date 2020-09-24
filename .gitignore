@@ -32,4 +32,3 @@ gemfiles/.bundle/config
 Gemfile.lock
 .idea
 .settings
-lib/arjdbc/jdbc/adapter_java.jar
