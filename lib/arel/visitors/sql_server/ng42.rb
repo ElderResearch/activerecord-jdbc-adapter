@@ -100,7 +100,16 @@ module Arel
 
         self.class.collector_proxy(collector) do |sql|
           select_order_by ||= "ORDER BY #{@connection.determine_order_clause(sql)}"
-          replace_limit_offset!(sql, limit_for(o.limit), o.offset && o.offset.value.to_i, select_order_by)
+		  
+		  # HACK
+          # https://github.com/jruby/activerecord-jdbc-adapter/issues/736
+          # Only mess with the limit if theres a "meaningful" limit
+          limit = limit_for(o.limit)
+          if o.offset || (limit && limit < 9223372036854775807)
+            replace_limit_offset!(sql, limit, o.offset && o.offset.value.to_i, select_order_by)
+          end
+          # END HACK
+		  
           sql = "SELECT COUNT(*) AS count_id FROM (#{sql}) AS subquery" if select_count
           sql
         end
